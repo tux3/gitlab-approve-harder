@@ -8,16 +8,22 @@
 // @downloadURL https://raw.githubusercontent.com/tux3/gitlab-approve-harder/master/gitlab-approve-harder.user.js
 // ==/UserScript==
 
+function getUrl() {
+  const reg  = /(.*\/merge_requests\/[0-9]+).*/;
+  return reg.exec(document.location)[1];
+}
+
 function unapprove() {
   var e = document.querySelector('meta[name=csrf-token]');
   let csrfToken = null !== e ? e.getAttribute('content') : null
 
   let x = new XMLHttpRequest();
-  x.open('DELETE', document.location+'/approvals', false);
+  x.open('DELETE', getUrl()+'/approvals', false);
   x.setRequestHeader('X-CSRF-Token', csrfToken);
   x.setRequestHeader('Accept', 'application/json, text/plain, */*');
   x.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   x.send(null);
+  console.log(x);
 }
 
 function approve() {
@@ -26,7 +32,7 @@ function approve() {
 
   return new Promise(function (resolve, reject) {
     let x = new XMLHttpRequest();
-    x.open('POST', document.location+'/approvals', true);
+    x.open('POST', getUrl()+'/approvals', true);
     x.setRequestHeader('X-CSRF-Token', csrfToken);
     x.setRequestHeader('Accept', 'application/json, text/plain, */*');
     x.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
