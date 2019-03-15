@@ -1,12 +1,16 @@
 // ==UserScript==
 // @name     Gitlab Approve Harder
 // @description Approve a merge request multiple times!
-// @version  1.1
+// @version  1.2
 // @grant    none
 // @match *://*/*merge_requests/*
 // @require https://raw.githubusercontent.com/uzairfarooq/arrive/master/minified/arrive.min.js
 // @downloadURL https://raw.githubusercontent.com/tux3/gitlab-approve-harder/master/gitlab-approve-harder.user.js
 // ==/UserScript==
+
+const arriveOpt = {
+  existing: true,
+};
 
 function getUrl() {
   const reg  = /(.*\/merge_requests\/[0-9]+).*/;
@@ -52,7 +56,7 @@ function approveHard() {
   });
 }
 
-document.arrive(".mr-widget-content .js-mr-approvals", function() {
+document.arrive(".mr-widget-content .js-mr-approvals", arriveOpt, function() {
   var approvebtn = document.createElement("button");
   approvebtn.classList.add('btn');
   approvebtn.appendChild(document.createTextNode("Approve harder"));
