@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name     Gitlab Approve Harder
 // @description Approve a merge request multiple times!
-// @version  1.2
+// @version  1.3
 // @grant    none
 // @match *://*/*merge_requests/*
 // @require https://raw.githubusercontent.com/uzairfarooq/arrive/master/minified/arrive.min.js
@@ -49,7 +49,7 @@ function approveHard() {
   console.log("Gitlab userscript: Approving harder");
   unapprove();
   let reqs = [];
-  for (let i=1; i<10; ++i)
+  for (let i=1; i<32; ++i)
     reqs.push(approve());
   Promise.all(reqs).then(function() {
     location.reload();
